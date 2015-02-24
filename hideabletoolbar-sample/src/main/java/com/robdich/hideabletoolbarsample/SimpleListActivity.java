@@ -18,7 +18,7 @@ import com.robdich.hideabletoolbar.view.ObserveableRecyclerView;
  */
 public class SimpleListActivity extends HideableToolbarActivity {
 
-    private RecyclerView recyclerView;
+    private ObserveableRecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
     private static final int ITEM_COUNT = 30;
@@ -33,7 +33,7 @@ public class SimpleListActivity extends HideableToolbarActivity {
             listItems[i] = i;
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.recylerView);
+        recyclerView = (ObserveableRecyclerView) findViewById(R.id.recylerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new SimpleListAdapter());
@@ -42,7 +42,7 @@ public class SimpleListActivity extends HideableToolbarActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        observeScrollable((ObserveableRecyclerView)recyclerView);
+        observeScrollable(recyclerView);
     }
 
     @Override

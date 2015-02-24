@@ -2,13 +2,13 @@ package com.robdich.hideabletoolbar;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 
 import com.robdich.hideabletoolbar.scrollobserver.IScrollObserver;
-import com.robdich.hideabletoolbar.view.ObserveableRecyclerView;
+import com.robdich.hideabletoolbar.scrollobserver.IScrollable;
+import com.robdich.hideabletoolbar.scrollobserver.IScrollableCallbacks;
 
 
 public class HideableToolbarActivity extends BaseActivity implements IScrollObserver {
@@ -35,7 +35,7 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
     }
 
     @Override
-    public void observeScrollable(final ObserveableRecyclerView view) {
+    public void observeScrollable(final IScrollable scrollable) {
 
         ViewTreeObserver vto = hideableToolbar.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -47,32 +47,27 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
                     hideableToolbar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
                 hideableToolbarHeight = hideableToolbar.getMeasuredHeight();
-                view.setTopPadding(hideableToolbarHeight);
+                scrollable.setTopClearance(hideableToolbarHeight);
             }
         });
 
-        view.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int scrollAmount = 0;
+        scrollable.setScrollableCallbacks(new IScrollableCallbacks() {
 
+            /**
+             * During onScrollUp hide toolbar
+             */
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                boolean show = dy < 0;
-                if(show){
-                    scrollAmount = 0;
-                } else {
-                    scrollAmount += dy;
-                    show = scrollAmount < hideableToolbarHeight;
-                }
-                showOrHideActionBar(show);
+            public void onScrollUp() {
+                showOrHideActionBar(false);
             }
 
+            /**
+             * During onScrollDown show toolbar
+             */
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+            public void onScrollDown() {
+                showOrHideActionBar(true);
             }
-
         });
 
     }
