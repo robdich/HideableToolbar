@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
   */
 public class BaseActivity extends ActionBarActivity {
 
-    protected Toolbar toolbar;
+    protected Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +29,16 @@ public class BaseActivity extends ActionBarActivity {
     }
 
     protected Toolbar getToolbar(){
-        if(toolbar == null){
+        if(mToolbar == null){
             int res = getToolbarResId();
             if(res != -1){
-                toolbar = (Toolbar) findViewById(res);
-                if(toolbar != null) {
-                    setSupportActionBar(toolbar);
+                mToolbar = (Toolbar) findViewById(res);
+                if(mToolbar != null) {
+                    setSupportActionBar(mToolbar);
                 }
             }
         }
-        return toolbar;
+        return mToolbar;
     }
 
     protected int getToolbarResId(){

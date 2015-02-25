@@ -18,8 +18,8 @@ import com.robdich.hideabletoolbar.view.ObserveableRecyclerView;
  */
 public class SimpleListActivity extends HideableToolbarActivity {
 
-    private ObserveableRecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+    private ObserveableRecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     private static final int ITEM_COUNT = 30;
     private static final int[] listItems = new int[ITEM_COUNT];
@@ -33,16 +33,16 @@ public class SimpleListActivity extends HideableToolbarActivity {
             listItems[i] = i;
         }
 
-        recyclerView = (ObserveableRecyclerView) findViewById(R.id.recylerView);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new SimpleListAdapter());
+        mRecyclerView = (ObserveableRecyclerView) findViewById(R.id.recylerView);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(new SimpleListAdapter());
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        observeScrollable(recyclerView);
+        observeScrollable(mRecyclerView);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class SimpleListActivity extends HideableToolbarActivity {
     }
 
     @Override
-    protected View getHideableToolbar() {
+    protected View getHideableView() {
         return findViewById(R.id.toolbar_actionbar);
     }
 

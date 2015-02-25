@@ -12,8 +12,8 @@ import com.robdich.hideabletoolbar.scrollobserver.IScrollableCallbacks;
  */
 public class ObserveableRecyclerView extends RecyclerView implements IScrollable{
 
-    private IScrollableCallbacks scrollableCallbacks;
-    private int topClearance;
+    private IScrollableCallbacks mScrollableCallbacks;
+    private int mTopClearance;
 
     public ObserveableRecyclerView(Context context){
         super(context);
@@ -31,7 +31,23 @@ public class ObserveableRecyclerView extends RecyclerView implements IScrollable
     }
 
     public void setScrollableCallbacks(IScrollableCallbacks scrollableCallbacks){
-        this.scrollableCallbacks = scrollableCallbacks;
+        this.mScrollableCallbacks = scrollableCallbacks;
+    }
+
+    /**
+     * Sets the additonal top padding so the first items will not be clipped due the actionbar
+     * overlaying the Scrollable object
+     * @param clearance amount of additional padding
+     */
+    public void setTopClearance(int clearance){
+        mTopClearance = clearance;
+        setPadding(getPaddingLeft(),
+                getPaddingTop() + clearance,
+                getPaddingRight(),
+                getPaddingBottom());
+        // Call this method to avoid bug that does not apply padding right away.
+        // TO DO : Find another solution to the said bug.
+        scrollToPosition(0);
     }
 
     private void init(){
@@ -44,17 +60,17 @@ public class ObserveableRecyclerView extends RecyclerView implements IScrollable
 
                 if (dy < 0) {
                     scrollAmount = 0;
-                    if(scrollableCallbacks != null){
-                        scrollableCallbacks.onScrollDown();
+                    if(mScrollableCallbacks != null){
+                        mScrollableCallbacks.onScrollUp();
                     }
                 } else {
                     // Add the amount of scroll.
-                    // If the amount is more than the additional top padding call scroll up
+                    // If the amount is more than the additional top padding call onScrollDown
                     // This is to avoid showing the additional top padding.
                     scrollAmount += dy;
-                    if(scrollAmount > topClearance){
-                        if(scrollableCallbacks != null){
-                            scrollableCallbacks.onScrollUp();
+                    if(scrollAmount > mTopClearance){
+                        if(mScrollableCallbacks != null){
+                            mScrollableCallbacks.onScrollDown();
                         }
                     }
                 }
@@ -66,17 +82,6 @@ public class ObserveableRecyclerView extends RecyclerView implements IScrollable
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-    }
-
-    public void setTopClearance(int clearance){
-        topClearance = clearance;
-        setPadding(getPaddingLeft(),
-                getPaddingTop() + clearance,
-                getPaddingRight(),
-                getPaddingBottom());
-        // Call this method to avoid bug that clips the first items because of the additional padding
-        // TO DO : Find another solution to the said bug.
-        scrollToPosition(0);
     }
 
 }

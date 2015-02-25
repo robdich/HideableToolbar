@@ -13,9 +13,8 @@ import com.robdich.hideabletoolbar.scrollobserver.IScrollableCallbacks;
 
 public class HideableToolbarActivity extends BaseActivity implements IScrollObserver {
 
-    private View hideableToolbar;
-    private int hideableToolbarHeight;
-    private boolean isActionBarShown = true;
+    private View mHideableView;
+    private boolean mActionBarShown = true;
 
     private static final int HEADER_HIDE_ANIM_DURATION = 300;
 
@@ -27,70 +26,71 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        hideableToolbar = getHideableToolbar();
+        mHideableView = getHideableView();
     }
 
-    protected View getHideableToolbar(){
+    protected View getHideableView(){
         return null;
     }
 
     @Override
     public void observeScrollable(final IScrollable scrollable) {
 
-        ViewTreeObserver vto = hideableToolbar.getViewTreeObserver();
+        ViewTreeObserver vto = mHideableView.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    hideableToolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    mHideableView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 } else {
-                    hideableToolbar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    mHideableView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
-                hideableToolbarHeight = hideableToolbar.getMeasuredHeight();
-                scrollable.setTopClearance(hideableToolbarHeight);
+
+                int height = mHideableView.getMeasuredHeight();
+                scrollable.setTopClearance(height);
             }
         });
 
         scrollable.setScrollableCallbacks(new IScrollableCallbacks() {
 
             /**
-             * During onScrollUp hide toolbar
+             * During onScrollUp show toolbar
              */
             @Override
             public void onScrollUp() {
-                showOrHideActionBar(false);
+                showOrHideActionBar(true);
             }
 
             /**
-             * During onScrollDown show toolbar
+             * During onScrollDown hide toolbar
              */
             @Override
             public void onScrollDown() {
-                showOrHideActionBar(true);
+                showOrHideActionBar(false);
             }
         });
 
     }
 
     protected void showOrHideActionBar(boolean show) {
-        if (show == isActionBarShown) {
+        if (show == mActionBarShown) {
             return;
         }
 
-        isActionBarShown = show;
+        mActionBarShown = show;
         onActionBarShowOrHide(show);
     }
 
     protected void onActionBarShowOrHide(boolean shown) {
         if (shown) {
-            hideableToolbar.animate()
+            mHideableView.animate()
                     .translationY(0)
                             //.alpha(1)
                     .setDuration(HEADER_HIDE_ANIM_DURATION)
                     .setInterpolator(new DecelerateInterpolator());
         } else {
-            hideableToolbar.animate()
-                    .translationY(-hideableToolbar.getBottom())
+            mHideableView.animate()
+                    .translationY(-mHideableView.getBottom())
                             //.alpha(0)
                     .setDuration(HEADER_HIDE_ANIM_DURATION)
                     .setInterpolator(new DecelerateInterpolator());
