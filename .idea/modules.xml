@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HideableToobar.iml" filepath="$PROJECT_DIR$/HideableToobar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HideableToolbar.iml" filepath="$PROJECT_DIR$/HideableToolbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/hideabletoolbar/hideabletoolbar.iml" filepath="$PROJECT_DIR$/hideabletoolbar/hideabletoolbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/hideabletoolbar-sample/hideabletoolbar-sample.iml" filepath="$PROJECT_DIR$/hideabletoolbar-sample/hideabletoolbar-sample.iml" />

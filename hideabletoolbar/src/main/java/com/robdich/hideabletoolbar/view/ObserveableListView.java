@@ -2,6 +2,7 @@ package com.robdich.hideabletoolbar.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ListView;
 
 import com.robdich.hideabletoolbar.scrollobserver.IScrollable;
@@ -14,6 +15,11 @@ public class ObserveableListView extends ListView implements IScrollable{
 
     private IScrollableCallbacks mScrollableCallbacks;
     private int mTopClearance;
+
+    private int mScrollAmount = 0;
+    private View mPrevFirstVisibleChild;
+    private int mPreFirstVisibleChildPosition;
+    private int mPrevFirstVisibleChildTop;
 
     public ObserveableListView(Context context){
         super(context);
@@ -32,6 +38,54 @@ public class ObserveableListView extends ListView implements IScrollable{
         this.mScrollableCallbacks = scrollableCallbacks;
     }
 
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+
+        int deltaY = 0;
+
+        if (mPrevFirstVisibleChild == null) {
+            if (getChildCount() > 0) {
+                View child = getChildAt(getFirstVisiblePosition());
+                if(child != null) {
+                    mPrevFirstVisibleChild = child;
+                    mPrevFirstVisibleChildTop = mPrevFirstVisibleChild.getTop();
+                    mPreFirstVisibleChildPosition = getPositionForView(mPrevFirstVisibleChild);
+                }
+            }
+        } else {
+            if (mPrevFirstVisibleChild.getParent() == this &&
+                    getPositionForView(mPrevFirstVisibleChild) == mPreFirstVisibleChildPosition) {
+                int top = mPrevFirstVisibleChild.getTop();
+                deltaY = mPrevFirstVisibleChildTop - top;
+                mPrevFirstVisibleChildTop = top;
+            } else {
+                mPrevFirstVisibleChild = null;
+            }
+        }
+
+        computeScroll(deltaY);
+    }
+
+    private void computeScroll(int deltaY){
+        if (deltaY < 0) {
+            mScrollAmount = 0;
+            if(mScrollableCallbacks != null){
+                mScrollableCallbacks.onScrollUp();
+            }
+        } else {
+            // Add the amount of scroll.
+            // If the amount is more than the additional top padding call onScrollDown
+            // This is to avoid showing the additional top padding.
+            mScrollAmount += deltaY;
+            if(mScrollAmount > mTopClearance){
+                if(mScrollableCallbacks != null){
+                    mScrollableCallbacks.onScrollDown();
+                }
+            }
+        }
+    }
+
     /**
      * Sets the additonal top padding so the first items will not be clipped due the actionbar
      * overlaying the Scrollable object
@@ -44,5 +98,7 @@ public class ObserveableListView extends ListView implements IScrollable{
                 getPaddingTop() + clearance,
                 getPaddingRight(),
                 getPaddingBottom());
+//        smoothScrollToPosition(0);
     }
+
 }
