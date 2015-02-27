@@ -45,9 +45,6 @@ public class ObserveableRecyclerView extends RecyclerView implements IScrollable
                 getPaddingTop() + clearance,
                 getPaddingRight(),
                 getPaddingBottom());
-        // Call this method to avoid bug that does not apply padding right away.
-        // TO DO : Find another solution to the said bug.
-        scrollToPosition(0);
     }
 
     private void init(){

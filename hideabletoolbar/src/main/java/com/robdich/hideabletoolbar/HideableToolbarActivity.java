@@ -1,9 +1,8 @@
 package com.robdich.hideabletoolbar;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
 import com.robdich.hideabletoolbar.scrollobserver.IScrollObserver;
@@ -36,20 +35,8 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
     @Override
     public void observeScrollable(final IScrollable scrollable) {
 
-        ViewTreeObserver vto = mHideableView.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    mHideableView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                } else {
-                    mHideableView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-
-                int height = mHideableView.getMeasuredHeight();
-                scrollable.setTopClearance(height);
-            }
-        });
+        int height = getHideableToolbarHeight();
+        scrollable.setTopClearance(height);
 
         scrollable.setScrollableCallbacks(new IScrollableCallbacks() {
 
@@ -70,6 +57,19 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
             }
         });
 
+    }
+
+    /**
+     * Gets the height of the toolbar
+     * This can be overriden in the inheriting class if custom logic for getting
+     * toolbar logic is required. Ex. getting dimension defined in xml file.
+     * @return height of the toolbar that serves as an additional padding for
+     * the overlayed scrollable view
+     */
+    protected int getHideableToolbarHeight(){
+        mHideableView.measure(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        return mHideableView.getMeasuredHeight();
     }
 
     protected void showOrHideActionBar(boolean show) {

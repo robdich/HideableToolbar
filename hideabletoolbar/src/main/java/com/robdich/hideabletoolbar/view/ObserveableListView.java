@@ -98,7 +98,6 @@ public class ObserveableListView extends ListView implements IScrollable{
                 getPaddingTop() + clearance,
                 getPaddingRight(),
                 getPaddingBottom());
-//        smoothScrollToPosition(0);
     }
 
 }
