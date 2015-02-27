@@ -7,5 +7,6 @@
 
     <string name="activity_simple_listview">SimpleListView</string>
     <string name="activity_simple_recyclerview">SimpleRecyclerView</string>
+    <string name="activity_simple_scrollview">SimpleScrollView</string>
 
 </resources>

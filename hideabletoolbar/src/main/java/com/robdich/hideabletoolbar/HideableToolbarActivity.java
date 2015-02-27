@@ -62,7 +62,7 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
     /**
      * Gets the height of the toolbar
      * This can be overriden in the inheriting class if custom logic for getting
-     * toolbar logic is required. Ex. getting dimension defined in xml file.
+     * toolbar height is required. Ex. getting dimension defined in xml file.
      * @return height of the toolbar that serves as an additional padding for
      * the overlayed scrollable view
      */

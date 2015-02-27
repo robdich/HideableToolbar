@@ -20,6 +20,11 @@
             android:name=".SimpleRecyclerViewActivity"
             android:label="@string/activity_simple_recyclerview" >
         </activity>
+
+        <activity
+            android:name=".SimpleScrollViewActivity"
+            android:label="@string/activity_simple_scrollview" >
+        </activity>
     </application>
 
 </manifest>
