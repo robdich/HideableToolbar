@@ -13,6 +13,7 @@ import com.robdich.hideabletoolbar.scrollobserver.IScrollableCallbacks;
 public class HideableToolbarActivity extends BaseActivity implements IScrollObserver {
 
     private View mHideableView;
+    private int mHideableViewHeight = -1;
     private boolean mActionBarShown = true;
 
     private static final int HEADER_HIDE_ANIM_DURATION = 300;
@@ -67,9 +68,16 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
      * the overlayed scrollable view
      */
     protected int getHideableToolbarHeight(){
-        mHideableView.measure(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        return mHideableView.getMeasuredHeight();
+        //Check if hideableView height is already set.
+        if(mHideableViewHeight == -1){
+            if(mHideableView != null) {
+                mHideableView.measure(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                mHideableViewHeight = mHideableView.getMeasuredHeight();
+            }
+        }
+
+        return mHideableViewHeight != -1 ? mHideableViewHeight : 0;
     }
 
     protected void showOrHideActionBar(boolean show) {
@@ -82,6 +90,9 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
     }
 
     protected void onActionBarShowOrHide(boolean shown) {
+        if(mHideableView == null)
+            return;
+
         if (shown) {
             mHideableView.animate()
                     .translationY(0)
