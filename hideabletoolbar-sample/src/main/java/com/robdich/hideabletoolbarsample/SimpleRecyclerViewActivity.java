@@ -10,13 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.robdich.hideabletoolbar.HideableToolbarActivity;
 import com.robdich.hideabletoolbar.view.ObserveableRecyclerView;
 
 /**
  * Created by Robert on 2/24/2015.
  */
-public class SimpleRecyclerViewActivity extends HideableToolbarActivity {
+public class SimpleRecyclerViewActivity extends BaseNavDrawerActivity {
 
     private ObserveableRecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -53,6 +52,10 @@ public class SimpleRecyclerViewActivity extends HideableToolbarActivity {
     @Override
     protected View getHideableView() {
         return findViewById(R.id.toolbar_actionbar);
+    }
+
+    protected int getDrawerItemPostion(){
+        return DRAWER_ITEM_2;
     }
 
     @Override

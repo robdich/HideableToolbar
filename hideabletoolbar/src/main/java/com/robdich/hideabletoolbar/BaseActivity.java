@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 
 /**
  * This is a base activity that the HideableToolbarActivity inherits from.
- * Add all necessary features here like Navigation Drawers, menus, etc.
   */
 public class BaseActivity extends ActionBarActivity {
 

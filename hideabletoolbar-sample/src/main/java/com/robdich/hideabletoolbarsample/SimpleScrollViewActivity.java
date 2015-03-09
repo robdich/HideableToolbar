@@ -8,13 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.robdich.hideabletoolbar.HideableToolbarActivity;
 import com.robdich.hideabletoolbar.view.ObserveableScrollView;
 
 /**
  * Created by Robert on 2/27/2015.
  */
-public class SimpleScrollViewActivity extends HideableToolbarActivity {
+public class SimpleScrollViewActivity extends BaseNavDrawerActivity {
 
     private ObserveableScrollView mScrollView;
 
@@ -47,6 +46,10 @@ public class SimpleScrollViewActivity extends HideableToolbarActivity {
     @Override
     protected View getHideableView() {
         return findViewById(R.id.toolbar_actionbar);
+    }
+
+    protected int getDrawerItemPostion(){
+        return DRAWER_ITEM_3;
     }
 
     @Override
