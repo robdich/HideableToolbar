@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ToolbarListViewActivity"
+            android:name=".activity.ToolbarListViewActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,14 +17,25 @@
         </activity>
 
         <activity
-            android:name=".ToolbarRecyclerViewActivity"
+            android:name=".activity.ToolbarRecyclerViewActivity"
             android:label="@string/activity_toolbar_recyclerview" >
         </activity>
 
         <activity
-            android:name=".ToolbarScrollViewActivity"
+            android:name=".activity.ToolbarScrollViewActivity"
             android:label="@string/activity_toolbar_scrollview" >
         </activity>
+
+        <activity
+            android:name=".activity.TabListViewActivity"
+            android:label="@string/activity_tab_listview" >
+        </activity>
+
+        <activity
+            android:name=".activity.TabRecyclerViewActivity"
+            android:label="@string/activity_tab_recyclerview" >
+        </activity>
+
     </application>
 
 </manifest>

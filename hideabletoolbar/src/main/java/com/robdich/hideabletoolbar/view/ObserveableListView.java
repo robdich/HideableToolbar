@@ -64,7 +64,10 @@ public class ObserveableListView extends ListView implements IScrollable{
             }
         }
 
-        computeScroll(deltaY);
+        //Ignores scroll events from other listviews in case of multiple listviews
+        if(deltaY != 0) {
+            computeScroll(deltaY);
+        }
     }
 
     private void computeScroll(int deltaY){

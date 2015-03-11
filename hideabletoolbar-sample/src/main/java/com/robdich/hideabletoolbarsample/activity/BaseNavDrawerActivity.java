@@ -1,4 +1,4 @@
-package com.robdich.hideabletoolbarsample;
+package com.robdich.hideabletoolbarsample.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.robdich.hideabletoolbar.HideableToolbarActivity;
+import com.robdich.hideabletoolbarsample.R;
 
 /**
  * Created by Robert on 3/9/2015.
@@ -26,15 +27,22 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
     protected static final int DRAWER_ITEM_1 = 0;
     protected static final int DRAWER_ITEM_2 = 1;
     protected static final int DRAWER_ITEM_3 = 2;
+    protected static final int DRAWER_ITEM_4 = 3;
+    protected static final int DRAWER_ITEM_5 = 4;
+    protected static final int DRAWER_ITEM_6 = 5;
 
     private static final int[] ITEM_IDS = new int[]{
-            DRAWER_ITEM_1, DRAWER_ITEM_2, DRAWER_ITEM_3
+            DRAWER_ITEM_1, DRAWER_ITEM_2, DRAWER_ITEM_3,
+            DRAWER_ITEM_4, DRAWER_ITEM_5, DRAWER_ITEM_6
     };
 
     private static final String[] ITEM_TITLES = new String[]{
             "Toolbar ListView",
             "Toolbar RecyclerView",
-            "Toolbar ScrollView"
+            "Toolbar ScrollView",
+            "Tab ListView",
+            "Tab RecyclerView",
+            "Tab ScrollView"
     };
 
     @Override
@@ -104,20 +112,32 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
 
         Intent intent;
         switch (position){
-            case 0:
+            case DRAWER_ITEM_1:
                 intent = new Intent(this, ToolbarListViewActivity.class);
                 startActivity(intent);
                 finish();
                 break;
 
-            case 1:
+            case DRAWER_ITEM_2:
                 intent = new Intent(this, ToolbarRecyclerViewActivity.class);
                 startActivity(intent);
                 finish();
                 break;
 
-            case 2:
+            case DRAWER_ITEM_3:
                 intent = new Intent(this, ToolbarScrollViewActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+
+            case DRAWER_ITEM_4:
+                intent = new Intent(this, TabListViewActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+
+            case DRAWER_ITEM_5:
+                intent = new Intent(this, TabRecyclerViewActivity.class);
                 startActivity(intent);
                 finish();
                 break;

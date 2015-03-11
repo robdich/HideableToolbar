@@ -8,6 +8,8 @@
     <string name="activity_toolbar_listview">ToolbarListView</string>
     <string name="activity_toolbar_recyclerview">ToolbarRecyclerView</string>
     <string name="activity_toolbar_scrollview">ToolbarScrollView</string>
+    <string name="activity_tab_listview">TabListView</string>
+    <string name="activity_tab_recyclerview">TabRecyclerView</string>
 
     <string name="drawer_close">Close navigation drawer</string>
     <string name="drawer_open">Open navigation drawer</string>

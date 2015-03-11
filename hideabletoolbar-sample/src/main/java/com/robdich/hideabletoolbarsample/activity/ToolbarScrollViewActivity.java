@@ -1,14 +1,12 @@
-package com.robdich.hideabletoolbarsample;
+package com.robdich.hideabletoolbarsample.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.robdich.hideabletoolbar.view.ObserveableScrollView;
+import com.robdich.hideabletoolbarsample.R;
 
 /**
  * Created by Robert on 2/27/2015.
@@ -26,7 +24,7 @@ public class ToolbarScrollViewActivity extends BaseNavDrawerActivity {
 
         for(int i = 0; i < 30; i++) {
             View view;
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.text_item_layout, null);
             container.addView(view);
         }
@@ -50,28 +48,6 @@ public class ToolbarScrollViewActivity extends BaseNavDrawerActivity {
 
     protected int getDrawerItemPostion(){
         return DRAWER_ITEM_3;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_hideable_toolbar_sample, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 }
