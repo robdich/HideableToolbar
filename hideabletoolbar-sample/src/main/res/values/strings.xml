@@ -5,9 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="activity_simple_listview">SimpleListView</string>
-    <string name="activity_simple_recyclerview">SimpleRecyclerView</string>
-    <string name="activity_simple_scrollview">SimpleScrollView</string>
+    <string name="activity_toolbar_listview">ToolbarListView</string>
+    <string name="activity_toolbar_recyclerview">ToolbarRecyclerView</string>
+    <string name="activity_toolbar_scrollview">ToolbarScrollView</string>
 
     <string name="drawer_close">Close navigation drawer</string>
     <string name="drawer_open">Open navigation drawer</string>

@@ -2,9 +2,9 @@
 <resources>
 
     <string-array name="actitivy_titles">
-        <item>Simple ListView</item>
-        <item>Simple RecyclerView</item>
-        <item>Simple ScrollView</item>
+        <item>Toolbar ListView</item>
+        <item>Toolbar RecyclerView</item>
+        <item>Toolbar ScrollView</item>
     </string-array>
 
 </resources>

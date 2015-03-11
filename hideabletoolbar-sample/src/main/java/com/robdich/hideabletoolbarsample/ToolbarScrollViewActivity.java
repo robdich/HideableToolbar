@@ -13,14 +13,14 @@ import com.robdich.hideabletoolbar.view.ObserveableScrollView;
 /**
  * Created by Robert on 2/27/2015.
  */
-public class SimpleScrollViewActivity extends BaseNavDrawerActivity {
+public class ToolbarScrollViewActivity extends BaseNavDrawerActivity {
 
     private ObserveableScrollView mScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simple_scrollview);
+        setContentView(R.layout.activity_toolbar_scrollview);
         mScrollView = (ObserveableScrollView) findViewById(R.id.scrolView);
         LinearLayout container = (LinearLayout) findViewById(R.id.content_container);
 

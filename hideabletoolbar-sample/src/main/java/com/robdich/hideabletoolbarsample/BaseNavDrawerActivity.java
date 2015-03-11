@@ -18,7 +18,6 @@ import com.robdich.hideabletoolbar.HideableToolbarActivity;
  */
 public class BaseNavDrawerActivity extends HideableToolbarActivity {
 
-    private String[] mActivityTitles;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -28,11 +27,19 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
     protected static final int DRAWER_ITEM_2 = 1;
     protected static final int DRAWER_ITEM_3 = 2;
 
+    private static final int[] ITEM_IDS = new int[]{
+            DRAWER_ITEM_1, DRAWER_ITEM_2, DRAWER_ITEM_3
+    };
+
+    private static final String[] ITEM_TITLES = new String[]{
+            "Toolbar ListView",
+            "Toolbar RecyclerView",
+            "Toolbar ScrollView"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mActivityTitles = getResources().getStringArray(R.array.actitivy_titles);
     }
 
     protected void setupNavDrawer(){
@@ -70,12 +77,11 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         mListItemsContainer = (ViewGroup) findViewById(R.id.drawer_container);
-        int i = 0;
-        for(String item : mActivityTitles){
+        for(int id : ITEM_IDS){
             TextView view = (TextView) getLayoutInflater()
                     .inflate(R.layout.drawer_list_item, mListItemsContainer, false);
-            view.setText(item);
-            final int itemId = i++;
+            view.setText(ITEM_TITLES[id]);
+            final int itemId = id;
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,19 +105,19 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
         Intent intent;
         switch (position){
             case 0:
-                intent = new Intent(this, SimpleListViewActivity.class);
+                intent = new Intent(this, ToolbarListViewActivity.class);
                 startActivity(intent);
                 finish();
                 break;
 
             case 1:
-                intent = new Intent(this, SimpleRecyclerViewActivity.class);
+                intent = new Intent(this, ToolbarRecyclerViewActivity.class);
                 startActivity(intent);
                 finish();
                 break;
 
             case 2:
-                intent = new Intent(this, SimpleScrollViewActivity.class);
+                intent = new Intent(this, ToolbarScrollViewActivity.class);
                 startActivity(intent);
                 finish();
                 break;

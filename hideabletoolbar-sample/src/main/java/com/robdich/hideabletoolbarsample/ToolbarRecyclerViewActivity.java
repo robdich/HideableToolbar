@@ -1,23 +1,24 @@
 package com.robdich.hideabletoolbarsample;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.robdich.hideabletoolbar.view.ObserveableListView;
+import com.robdich.hideabletoolbar.view.ObserveableRecyclerView;
 
 /**
- * Created by Robert on 2/26/2015.
+ * Created by Robert on 2/24/2015.
  */
-public class SimpleListViewActivity extends BaseNavDrawerActivity{
+public class ToolbarRecyclerViewActivity extends BaseNavDrawerActivity {
 
-    private ObserveableListView mListView;
+    private ObserveableRecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     private static final int ITEM_COUNT = 30;
     private static final int[] listItems = new int[ITEM_COUNT];
@@ -25,27 +26,22 @@ public class SimpleListViewActivity extends BaseNavDrawerActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simple_listview);
+        setContentView(R.layout.activity_toolbar_recyclerview);
 
-        for (int i = 0; i < ITEM_COUNT; i++) {
+        for(int i = 0; i < ITEM_COUNT; i++){
             listItems[i] = i;
         }
 
-        mListView = (ObserveableListView) findViewById(R.id.listView);
-        SimpleListAdapter adapter = new SimpleListAdapter(this);
-        mListView.setAdapter(adapter);
-
+        mRecyclerView = (ObserveableRecyclerView) findViewById(R.id.recylerView);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(new SimpleRecylerViewAdapter());
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        observeScrollable(mListView);
-    }
-
-    @Override
-    protected CharSequence getActivityTitle() {
-        return getResources().getString(R.string.activity_simple_listview);
+        observeScrollable(mRecyclerView);
     }
 
     @Override
@@ -59,7 +55,7 @@ public class SimpleListViewActivity extends BaseNavDrawerActivity{
     }
 
     protected int getDrawerItemPostion(){
-        return DRAWER_ITEM_1;
+        return DRAWER_ITEM_2;
     }
 
     @Override
@@ -84,29 +80,37 @@ public class SimpleListViewActivity extends BaseNavDrawerActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    private class SimpleListAdapter extends ArrayAdapter<Integer>{
+    private class SimpleRecylerViewAdapter extends RecyclerView.Adapter<SimpleRecylerViewAdapter.ViewHolder> {
 
-        public SimpleListAdapter(Activity context){
-            super(context, R.layout.text_item_layout);
-        }
+        public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+            public TextView textView;
 
-            View view = convertView;
-
-            if(view == null){
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                view = inflater.inflate(R.layout.text_item_layout, parent, false);
+            public ViewHolder(View v) {
+                super(v);
+                textView = (TextView) v.findViewById(R.id.text_item);
             }
 
-            ((TextView) view.findViewById(R.id.text_item)).setText("Item " + listItems[position]);
-
-            return view;
         }
 
         @Override
-        public int getCount() {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.text_item_layout, parent, false);
+            ViewHolder vh = new ViewHolder(v);
+
+            return vh;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            int n = listItems[position];
+            holder.textView.setText("Item " + n);
+        }
+
+        @Override
+        public int getItemCount() {
             return listItems.length;
         }
     }
