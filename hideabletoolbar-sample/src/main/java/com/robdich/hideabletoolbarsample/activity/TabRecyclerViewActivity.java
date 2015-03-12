@@ -18,8 +18,8 @@ public class TabRecyclerViewActivity extends BaseTabActivity{
     private static final int FRAGMENTS_COUNT = 2;
     private static final String PAGE_ONE = "TAB 1";
     private static final String PAGE_TWO = "TAB 2";
-    private static final String TAG_FEED = "fragment_list1";
-    private static final String TAG_NOTIFICATIONS = "fragment_list2";
+    private static final String TAG_FRAGMENT1 = "fragment1";
+    private static final String TAG_FRAGMENT2 = "fragment2";
 
     @Override
     protected int getDrawerItemPostion() {
@@ -31,12 +31,12 @@ public class TabRecyclerViewActivity extends BaseTabActivity{
         super.onSaveInstanceState(outState);
         // orientation changes.
         if (mRecyclerViewFragment1 != null) {
-            getSupportFragmentManager().putFragment(outState, TAG_FEED,
+            getSupportFragmentManager().putFragment(outState, TAG_FRAGMENT1,
                     mRecyclerViewFragment1);
         }
 
         if (mRecyclerViewFragment2 != null) {
-            getSupportFragmentManager().putFragment(outState, TAG_NOTIFICATIONS,
+            getSupportFragmentManager().putFragment(outState, TAG_FRAGMENT2,
                     mRecyclerViewFragment2);
         }
     }
@@ -46,12 +46,12 @@ public class TabRecyclerViewActivity extends BaseTabActivity{
         super.onRestoreInstanceState(savedInstanceState);
         if (mRecyclerViewFragment1 == null) {
             mRecyclerViewFragment1 = (RecyclerViewFragment) getSupportFragmentManager()
-                    .getFragment(savedInstanceState, TAG_FEED);
+                    .getFragment(savedInstanceState, TAG_FRAGMENT1);
         }
 
         if (mRecyclerViewFragment2 == null) {
             mRecyclerViewFragment2 = (RecyclerViewFragment) getSupportFragmentManager()
-                    .getFragment(savedInstanceState, TAG_NOTIFICATIONS);
+                    .getFragment(savedInstanceState, TAG_FRAGMENT2);
         }
     }
 

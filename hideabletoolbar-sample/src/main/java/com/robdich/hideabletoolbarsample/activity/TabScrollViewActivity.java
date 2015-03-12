@@ -5,15 +5,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.robdich.hideabletoolbarsample.fragment.ListViewFragment;
+import com.robdich.hideabletoolbarsample.fragment.ScrollViewFragment;
 
 /**
- * Created by Robert on 3/11/2015.
+ * Created by Robert on 3/12/2015.
  */
-public class TabListViewActivity extends BaseTabActivity {
+public class TabScrollViewActivity extends BaseTabActivity{
 
-    private ListViewFragment mListFragment1;
-    private ListViewFragment mListFragment2;
+    private ScrollViewFragment mScrollViewFragment1;
+    private ScrollViewFragment mScrollViewFragment2;
 
     private static final int FRAGMENTS_COUNT = 2;
     private static final String PAGE_ONE = "TAB 1";
@@ -23,34 +23,34 @@ public class TabListViewActivity extends BaseTabActivity {
 
     @Override
     protected int getDrawerItemPostion() {
-        return DRAWER_ITEM_4;
+        return BaseNavDrawerActivity.DRAWER_ITEM_6;
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // orientation changes.
-        if (mListFragment1 != null) {
+        if (mScrollViewFragment1 != null) {
             getSupportFragmentManager().putFragment(outState, TAG_FRAGMENT1,
-                    mListFragment1);
+                    mScrollViewFragment1);
         }
 
-        if (mListFragment2 != null) {
+        if (mScrollViewFragment2 != null) {
             getSupportFragmentManager().putFragment(outState, TAG_FRAGMENT2,
-                    mListFragment2);
+                    mScrollViewFragment2);
         }
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if (mListFragment1 == null) {
-            mListFragment1 = (ListViewFragment) getSupportFragmentManager()
+        if (mScrollViewFragment1 == null) {
+            mScrollViewFragment1 = (ScrollViewFragment) getSupportFragmentManager()
                     .getFragment(savedInstanceState, TAG_FRAGMENT1);
         }
 
-        if (mListFragment2 == null) {
-            mListFragment2 = (ListViewFragment) getSupportFragmentManager()
+        if (mScrollViewFragment2 == null) {
+            mScrollViewFragment2 = (ScrollViewFragment) getSupportFragmentManager()
                     .getFragment(savedInstanceState, TAG_FRAGMENT2);
         }
     }
@@ -71,9 +71,9 @@ public class TabListViewActivity extends BaseTabActivity {
 
             switch (position) {
                 case 0:
-                    return (mListFragment1 = new ListViewFragment());
+                    return (mScrollViewFragment1 = new ScrollViewFragment());
                 case 1:
-                    return (mListFragment2 = new ListViewFragment());
+                    return (mScrollViewFragment2 = new ScrollViewFragment());
             }
 
             return null;
@@ -95,6 +95,5 @@ public class TabListViewActivity extends BaseTabActivity {
             return null;
         }
     }
-
 
 }

@@ -141,6 +141,12 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
                 startActivity(intent);
                 finish();
                 break;
+
+            case DRAWER_ITEM_6:
+                intent = new Intent(this, TabScrollViewActivity.class);
+                startActivity(intent);
+                finish();
+                break;
         }
 
     }

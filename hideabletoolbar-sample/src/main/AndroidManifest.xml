@@ -36,6 +36,11 @@
             android:label="@string/activity_tab_recyclerview" >
         </activity>
 
+        <activity
+            android:name=".activity.TabScrollViewActivity"
+            android:label="@string/activity_tab_scrollview" >
+        </activity>
+
     </application>
 
 </manifest>
