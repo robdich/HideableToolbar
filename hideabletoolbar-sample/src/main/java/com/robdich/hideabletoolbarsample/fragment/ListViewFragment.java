@@ -6,8 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.robdich.hideabletoolbar.scrollobserver.IScrollObserver;
 import com.robdich.hideabletoolbar.view.ObserveableListView;
@@ -48,6 +50,14 @@ public class ListViewFragment extends Fragment {
 
         ListViewAdapter adapter = new ListViewAdapter(getActivity());
         mListView.setAdapter(adapter);
+
+        mListView.setClickable(true);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), "Clicked Item " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         if (mScrollObserver != null && mListView != null){
             mScrollObserver.observeScrollable(mListView);
