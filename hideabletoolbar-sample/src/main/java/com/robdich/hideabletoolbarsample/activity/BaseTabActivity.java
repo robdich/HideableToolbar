@@ -21,6 +21,8 @@ public class BaseTabActivity extends BaseNavDrawerActivity {
     private Fragment mFragment1;
     private Fragment mFragment2;
 
+    private boolean mShowActionbarOnPageScroll = true;
+
     private static final int FRAGMENTS_COUNT = 2;
     private static final String PAGE_ONE = "TAB 1";
     private static final String PAGE_TWO = "TAB 2";
@@ -44,7 +46,9 @@ public class BaseTabActivity extends BaseNavDrawerActivity {
         mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                showOrHideActionBar(true);
+                if(mShowActionbarOnPageScroll) {
+                    showOrHideActionBar(true);
+                }
             }
 
             @Override
@@ -56,6 +60,14 @@ public class BaseTabActivity extends BaseNavDrawerActivity {
             }
         });
 
+    }
+
+    /**
+     * Override this to set if Actionbar shows when pageviewer is swiped/scrolled.
+     * @param show true when Actionbar should be shown on pageviewer scroll, false otherwise
+     */
+    protected void setShowActionbarOnPageScroll(boolean show){
+        mShowActionbarOnPageScroll = show;
     }
 
     @Override

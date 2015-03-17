@@ -13,8 +13,10 @@ import com.robdich.hideabletoolbar.scrollobserver.IScrollableCallbacks;
 public class HideableToolbarActivity extends BaseActivity implements IScrollObserver {
 
     private View mHideableView;
-    private int mHideableViewHeight = -1;
+    private int mHideableViewHeight = 0;
     private boolean mActionBarShown = true;
+
+    private View mTabView;
 
     private static final int HEADER_HIDE_ANIM_DURATION = 300;
 
@@ -27,9 +29,14 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         mHideableView = getHideableView();
+        mTabView = getTabView();
     }
 
     protected View getHideableView(){
+        return null;
+    }
+
+    protected View getTabView() {
         return null;
     }
 
@@ -68,16 +75,21 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
      * the overlayed scrollable view
      */
     protected int getHideableToolbarHeight(){
-        //Check if hideableView height is already set.
-        if(mHideableViewHeight == -1){
-            if(mHideableView != null) {
-                mHideableView.measure(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-                mHideableViewHeight = mHideableView.getMeasuredHeight();
-            }
+        int tabHeight = 0;
+
+        if(mHideableView != null) {
+            mHideableView.measure(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            mHideableViewHeight = mHideableView.getMeasuredHeight();
         }
 
-        return mHideableViewHeight != -1 ? mHideableViewHeight : 0;
+        if(mTabView != null) {
+            mTabView.measure(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            tabHeight = mTabView.getMeasuredHeight();
+        }
+
+        return mHideableViewHeight + tabHeight;
     }
 
     protected void showOrHideActionBar(boolean show) {
@@ -90,28 +102,31 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
     }
 
     protected void onActionBarShowOrHide(boolean shown) {
-        if(mHideableView == null)
-            return;
+        if(mHideableView != null) {
+            animateToolbar(shown);
+        }
 
-        if (shown) {
-            mHideableView.animate()
-                    .translationY(0)
-                            //.alpha(1)
-                    .setDuration(HEADER_HIDE_ANIM_DURATION)
-                    .setInterpolator(new DecelerateInterpolator());
-        } else {
-            mHideableView.animate()
-                    .translationY(-mHideableView.getBottom())
-                            //.alpha(0)
-                    .setDuration(HEADER_HIDE_ANIM_DURATION)
-                    .setInterpolator(new DecelerateInterpolator());
+        if(mTabView != null){
+            animateTabs(shown);
         }
     }
 
-    protected void onNavDrawerStateChanged(boolean isOpen, boolean isAnimating) {
-        if (isOpen) {
-            showOrHideActionBar(true);
-        }
+    private void animateToolbar(boolean show){
+        int translation = show ? 0 : -mHideableView.getBottom();
+        animateView(mHideableView, translation);
+    }
+
+    private void animateTabs(boolean show){
+        int translation = show ? 0 : -mHideableViewHeight;
+        animateView(mTabView, translation);
+    }
+
+    private void animateView(View view, int translation){
+        view.animate()
+                .translationY(translation)
+                        //.alpha(1)
+                .setDuration(HEADER_HIDE_ANIM_DURATION)
+                .setInterpolator(new DecelerateInterpolator());
     }
 
 }

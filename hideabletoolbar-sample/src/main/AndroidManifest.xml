@@ -41,6 +41,11 @@
             android:label="@string/activity_tab_scrollview" >
         </activity>
 
+        <activity
+            android:name=".activity.FixedTabListViewActivity"
+            android:label="@string/activity_fixed_tab_listview" >
+        </activity>
+
     </application>
 
 </manifest>

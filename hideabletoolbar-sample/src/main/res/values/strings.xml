@@ -11,6 +11,7 @@
     <string name="activity_tab_listview">TabListView</string>
     <string name="activity_tab_recyclerview">TabRecyclerView</string>
     <string name="activity_tab_scrollview">TabScrollView</string>
+    <string name="activity_fixed_tab_listview">FixedTabListView</string>
 
     <string name="drawer_close">Close navigation drawer</string>
     <string name="drawer_open">Open navigation drawer</string>

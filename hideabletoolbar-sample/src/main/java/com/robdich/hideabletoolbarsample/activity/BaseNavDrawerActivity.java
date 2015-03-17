@@ -30,10 +30,12 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
     protected static final int DRAWER_ITEM_4 = 3;
     protected static final int DRAWER_ITEM_5 = 4;
     protected static final int DRAWER_ITEM_6 = 5;
+    protected static final int DRAWER_ITEM_7 = 6;
 
     private static final int[] ITEM_IDS = new int[]{
             DRAWER_ITEM_1, DRAWER_ITEM_2, DRAWER_ITEM_3,
-            DRAWER_ITEM_4, DRAWER_ITEM_5, DRAWER_ITEM_6
+            DRAWER_ITEM_4, DRAWER_ITEM_5, DRAWER_ITEM_6,
+            DRAWER_ITEM_7
     };
 
     private static final String[] ITEM_TITLES = new String[]{
@@ -42,7 +44,8 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
             "Toolbar ScrollView",
             "Tab ListView",
             "Tab RecyclerView",
-            "Tab ScrollView"
+            "Tab ScrollView",
+            "Fixed Tab ListView"
     };
 
     @Override
@@ -147,6 +150,12 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
                 startActivity(intent);
                 finish();
                 break;
+
+            case DRAWER_ITEM_7:
+                intent = new Intent(this, FixedTabListViewActivity.class);
+                startActivity(intent);
+                finish();
+                break;
         }
 
     }
@@ -174,6 +183,12 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
             return true;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onNavDrawerStateChanged(boolean isOpen, boolean isAnimating) {
+        if (isOpen) {
+            showOrHideActionBar(true);
+        }
     }
 
 }
