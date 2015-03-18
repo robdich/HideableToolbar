@@ -18,11 +18,20 @@ public class FixedTabListViewActivity extends BaseTabActivity {
         setShowActionbarOnPageScroll(false);
     }
 
+    /**
+     * Sets only the toolbar as the hideableView instead of the entire
+     * viewgroup containing the toolbar + tabs
+     * @return toolbar view
+     */
     @Override
     protected View getHideableView() {
         return (findViewById(R.id.toolbar_actionbar));
     }
 
+    /**
+     * Sets the tab view. Doing this creates a fixed tab effect (or sticky tabs)
+     * @return tab view
+     */
     @Override
     protected View getTabView() {
         return (findViewById(R.id.sliding_tabs));

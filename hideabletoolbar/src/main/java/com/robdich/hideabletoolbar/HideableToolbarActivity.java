@@ -9,14 +9,19 @@ import com.robdich.hideabletoolbar.scrollobserver.IScrollObserver;
 import com.robdich.hideabletoolbar.scrollobserver.IScrollable;
 import com.robdich.hideabletoolbar.scrollobserver.IScrollableCallbacks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class HideableToolbarActivity extends BaseActivity implements IScrollObserver {
 
     private View mHideableView;
+    private View mTabView;
     private int mHideableViewHeight = 0;
+    private int mTabViewHeight = 0;
     private boolean mActionBarShown = true;
 
-    private View mTabView;
+    private List<IScrollable> mScrollables = new ArrayList<IScrollable>();
 
     private static final int HEADER_HIDE_ANIM_DURATION = 300;
 
@@ -36,6 +41,12 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
         return null;
     }
 
+    /**
+     * By default the tab view is null.
+     * Overriding this in the inheriting class and returning a tabs view creates
+     * a fixed tab effect. Hiding the toolbar while still showing the tabs.
+     * @return tabs view
+     */
     protected View getTabView() {
         return null;
     }
@@ -43,11 +54,11 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
     @Override
     public void observeScrollable(final IScrollable scrollable) {
 
+        mScrollables.add(scrollable);
+
         int height = getHideableToolbarHeight();
         scrollable.setTopClearance(height);
-
         scrollable.setScrollableCallbacks(new IScrollableCallbacks() {
-
             /**
              * During onScrollUp show toolbar
              */
@@ -75,8 +86,6 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
      * the overlayed scrollable view
      */
     protected int getHideableToolbarHeight(){
-        int tabHeight = 0;
-
         if(mHideableView != null) {
             mHideableView.measure(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -86,10 +95,10 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
         if(mTabView != null) {
             mTabView.measure(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            tabHeight = mTabView.getMeasuredHeight();
+            mTabViewHeight = mTabView.getMeasuredHeight();
         }
 
-        return mHideableViewHeight + tabHeight;
+        return mHideableViewHeight + mTabViewHeight;
     }
 
     protected void showOrHideActionBar(boolean show) {
@@ -116,9 +125,23 @@ public class HideableToolbarActivity extends BaseActivity implements IScrollObse
         animateView(mHideableView, translation);
     }
 
+    /**
+     * This depends on whether the toolbar is shown or hidden.
+     * When the toolbar is hidden we translate the tabView to the toolbar's original position
+     * @param show true-toolbar is shown, false-toolbar is hidden.
+     */
     private void animateTabs(boolean show){
         int translation = show ? 0 : -mHideableViewHeight;
         animateView(mTabView, translation);
+
+        //Set the new padding everytime the toolbar is shown or hidden.
+        //This is to avoid displaying an empty space due to additional padding
+        //when the toolbar is hidden and a pageview scroll is done.
+        int height = show ? mHideableViewHeight + mTabViewHeight :
+                mTabViewHeight;
+        for (IScrollable scrollable : mScrollables){
+            scrollable.setTopClearance(height);
+        }
     }
 
     private void animateView(View view, int translation){

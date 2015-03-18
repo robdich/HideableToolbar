@@ -3,6 +3,7 @@ package com.robdich.hideabletoolbar.view;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.robdich.hideabletoolbar.scrollobserver.IScrollable;
 import com.robdich.hideabletoolbar.scrollobserver.IScrollableCallbacks;
@@ -14,6 +15,7 @@ public class ObserveableRecyclerView extends RecyclerView implements IScrollable
 
     private IScrollableCallbacks mScrollableCallbacks;
     private int mTopClearance;
+    private int mOriginalTopPadding = -1;
 
     public ObserveableRecyclerView(Context context){
         super(context);
@@ -41,8 +43,12 @@ public class ObserveableRecyclerView extends RecyclerView implements IScrollable
      */
     public void setTopClearance(int clearance){
         mTopClearance = clearance;
+        //This is to make sure were only getting the original top padding the first time.
+        if(mOriginalTopPadding == -1) {
+            mOriginalTopPadding = getPaddingTop();
+        }
         setPadding(getPaddingLeft(),
-                getPaddingTop() + clearance,
+                mOriginalTopPadding + clearance,
                 getPaddingRight(),
                 getPaddingBottom());
     }
@@ -77,6 +83,13 @@ public class ObserveableRecyclerView extends RecyclerView implements IScrollable
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                View firstChild = getChildAt(0);
+                int top = firstChild.getTop();
+                if(top > 0){
+                    if(mScrollableCallbacks != null){
+                        mScrollableCallbacks.onScrollUp();
+                    }
+                }
             }
         });
     }

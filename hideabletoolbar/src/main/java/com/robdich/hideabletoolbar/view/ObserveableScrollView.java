@@ -14,6 +14,7 @@ public class ObserveableScrollView extends ScrollView implements IScrollable {
 
     private IScrollableCallbacks mScrollableCallbacks;
     private int mTopClearance;
+    private int mOriginalTopPadding = -1;
     private int mScrollAmount;
 
     public ObserveableScrollView(Context context){
@@ -31,6 +32,21 @@ public class ObserveableScrollView extends ScrollView implements IScrollable {
     @Override
     public void setScrollableCallbacks(IScrollableCallbacks scrollableCallbacks) {
         this.mScrollableCallbacks = scrollableCallbacks;
+    }
+
+    @Override
+    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY,
+                                   int scrollRangeX, int scrollRangeY,
+                                   int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
+
+        if(deltaY < 0  && scrollY == 0 && isTouchEvent){
+            if(mScrollableCallbacks != null){
+                mScrollableCallbacks.onScrollUp();
+            }
+        }
+
+        return super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX,
+                scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
     }
 
     @Override
@@ -64,8 +80,12 @@ public class ObserveableScrollView extends ScrollView implements IScrollable {
     @Override
     public void setTopClearance(int clearance) {
         mTopClearance = clearance;
+        //This is to make sure were only getting the original top padding the first time.
+        if(mOriginalTopPadding == -1) {
+            mOriginalTopPadding = getPaddingTop();
+        }
         setPadding(getPaddingLeft(),
-                getPaddingTop() + clearance,
+                mOriginalTopPadding + clearance,
                 getPaddingRight(),
                 getPaddingBottom());
     }
