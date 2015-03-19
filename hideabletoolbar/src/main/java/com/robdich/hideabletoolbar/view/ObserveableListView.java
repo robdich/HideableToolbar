@@ -117,6 +117,7 @@ public class ObserveableListView extends ListView implements IScrollable{
         if(mOriginalTopPadding == -1) {
             mOriginalTopPadding = getPaddingTop();
         }
+
         setPadding(getPaddingLeft(),
                 mOriginalTopPadding + clearance,
                 getPaddingRight(),

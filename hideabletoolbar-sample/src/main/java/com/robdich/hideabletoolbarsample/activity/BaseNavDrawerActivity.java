@@ -31,11 +31,13 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
     protected static final int DRAWER_ITEM_5 = 4;
     protected static final int DRAWER_ITEM_6 = 5;
     protected static final int DRAWER_ITEM_7 = 6;
+    protected static final int DRAWER_ITEM_8 = 7;
+    protected static final int DRAWER_ITEM_9 = 8;
 
     private static final int[] ITEM_IDS = new int[]{
             DRAWER_ITEM_1, DRAWER_ITEM_2, DRAWER_ITEM_3,
             DRAWER_ITEM_4, DRAWER_ITEM_5, DRAWER_ITEM_6,
-            DRAWER_ITEM_7
+            DRAWER_ITEM_7, DRAWER_ITEM_8, DRAWER_ITEM_9
     };
 
     private static final String[] ITEM_TITLES = new String[]{
@@ -45,7 +47,9 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
             "Tab ListView",
             "Tab RecyclerView",
             "Tab ScrollView",
-            "Fixed Tab ListView"
+            "Fixed Tab ListView",
+            "Fixed Tab RecyclerView",
+            "Fixed Tab ScrollView"
     };
 
     @Override
@@ -113,50 +117,47 @@ public class BaseNavDrawerActivity extends HideableToolbarActivity {
 
         if(getDrawerItemPostion() == position) return;
 
-        Intent intent;
+        Intent intent = null;
         switch (position){
             case DRAWER_ITEM_1:
                 intent = new Intent(this, ToolbarListViewActivity.class);
-                startActivity(intent);
-                finish();
                 break;
 
             case DRAWER_ITEM_2:
                 intent = new Intent(this, ToolbarRecyclerViewActivity.class);
-                startActivity(intent);
-                finish();
                 break;
 
             case DRAWER_ITEM_3:
                 intent = new Intent(this, ToolbarScrollViewActivity.class);
-                startActivity(intent);
-                finish();
                 break;
 
             case DRAWER_ITEM_4:
                 intent = new Intent(this, TabListViewActivity.class);
-                startActivity(intent);
-                finish();
                 break;
 
             case DRAWER_ITEM_5:
                 intent = new Intent(this, TabRecyclerViewActivity.class);
-                startActivity(intent);
-                finish();
                 break;
 
             case DRAWER_ITEM_6:
                 intent = new Intent(this, TabScrollViewActivity.class);
-                startActivity(intent);
-                finish();
                 break;
 
             case DRAWER_ITEM_7:
                 intent = new Intent(this, FixedTabListViewActivity.class);
-                startActivity(intent);
-                finish();
+                break;
+
+            case DRAWER_ITEM_8:
+                intent = new Intent(this, FixedTabRecyclerViewActivity.class);
+                break;
+
+            case DRAWER_ITEM_9:
+                intent = new Intent(this, FixedTabScrollViewActivity.class);
                 break;
         }
+
+        startActivity(intent);
+        finish();
 
     }
 
