@@ -3,8 +3,8 @@
 
     <color name="background_white">#ffffff</color>
 
-    <color name="theme_color">#009688</color>
-    <color name="theme_darker_color">#00796b</color>
+    <color name="theme_color">#673ab7</color>
+    <color name="theme_darker_color">#512da8</color>
     <color name="theme_accent_color">#ffffff</color>
 
 </resources>

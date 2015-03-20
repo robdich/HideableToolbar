@@ -90,7 +90,7 @@ public class ListViewFragment extends Fragment {
                 view = inflater.inflate(R.layout.text_item_layout, parent, false);
             }
 
-            ((TextView) view.findViewById(R.id.text_item)).setText("Item " + listItems[position]);
+            ((TextView) view.findViewById(R.id.text_item)).setText("ListItem " + listItems[position]);
 
             return view;
         }

@@ -31,7 +31,7 @@ public class ScrollViewFragment extends Fragment {
         for(int i = 1; i <= 30; i++) {
             TextView text;
             text = (TextView) inflater.inflate(R.layout.text_item_layout, null);
-            text.setText("SomeText " + i);
+            text.setText("ScrollViewItem " + i);
             contentContainer.addView(text);
         }
 

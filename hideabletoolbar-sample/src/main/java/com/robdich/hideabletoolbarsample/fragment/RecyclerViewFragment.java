@@ -95,7 +95,7 @@ public class RecyclerViewFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             int n = listItems[position];
-            holder.textView.setText("Item " + n);
+            holder.textView.setText("RecyclerViewItem " + n);
         }
 
         @Override
