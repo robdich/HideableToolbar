@@ -75,6 +75,8 @@ public class BaseTabActivity extends BaseNavDrawerActivity {
         return R.id.toolbar_actionbar;
     }
 
+    //Use clipChildren=false on the ViewGroup containing the toolbar and tab views.
+    //Otherwise it will cause flickering when animating ViewGroup
     @Override
     protected View getHideableView() {
         return (findViewById(R.id.header_bar));
